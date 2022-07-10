@@ -1,0 +1,1 @@
+cmd_/home/skynet/Dev/tools/egpu-x13/src/kmod/hello_mod.ko := ld -r -m elf_x86_64 --build-id=sha1  -T scripts/module.lds -o /home/skynet/Dev/tools/egpu-x13/src/kmod/hello_mod.ko /home/skynet/Dev/tools/egpu-x13/src/kmod/hello_mod.prelink.o /home/skynet/Dev/tools/egpu-x13/src/kmod/hello_mod.mod.o;  true

@@ -1,0 +1,1 @@
+cmd_/home/skynet/Dev/tools/egpu-x13/src/kmod/Module.symvers := sed 's/\.ko$$/.prelink\.o/' /home/skynet/Dev/tools/egpu-x13/src/kmod/modules.order | scripts/mod/modpost  -a  -o /home/skynet/Dev/tools/egpu-x13/src/kmod/Module.symvers -e -i Module.symvers  -N -T -
