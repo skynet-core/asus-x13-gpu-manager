@@ -1,8 +1,9 @@
-#ifndef asus_ctrl_c_h_
-#define asus_ctrl_c_h_
+#ifndef asus_manager_proxy_h_
+#define asus_manager_proxy_h_ 1
 
 #include <sdbus-c++/sdbus-c++.h>
-#include "asus-ctrl-client-glue.h"
+#include "asus-manager-proxy-glue.h"
+#include "asus-manager-proxy.h"
 
 namespace org
 {
@@ -27,10 +28,12 @@ namespace org
         protected:
             void onTxStart(const std::string &id, const std::string &info) override
             {
+                LOG_INF("transaction {} started: {}\n", id, info);
             }
 
-            void onTxEnd(const std::string &id, const int32_t &code) override
+            void onTxEnd(const std::string &id, const int32_t &code, const std::string &status) override
             {
+                LOG_INF("transaction {} ended: ({}) {}\n", id, code, status);
             }
         };
     }

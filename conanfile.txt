@@ -4,7 +4,7 @@ catch2/3.0.1
 fmt/8.1.1
 libsystemd/249.7
 sdbus-cpp/1.1.0
-poco/1.11.3
+kmod/29
 
 [generators]
 CMakeDeps

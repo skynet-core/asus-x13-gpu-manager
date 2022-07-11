@@ -1,21 +1,21 @@
 #include <string>
 
 #include "asus-manager-adapter.h"
-#define LOG_LEVEL 4
 #include <egpu_x13/api.h>
 
 using namespace org::skynet;
 
+const std::string AsusManager::device_id{"0000:01:00.0"};
 
 int main(int argc, char *argv[])
 {
-    LOG_DBG("starting " + destinationName + " service ...");
-    auto connection = sdbus::createSystemBusConnection(destinationName);
+    LOG_DBG("starting {} service ...\n", asus::DESTINATION);
+    auto connection = sdbus::createSystemBusConnection(asus::DESTINATION);
     // Create asus ctrl D-Bus object.
-    LOG_DBG("creating " + objectPath + " object ...");
-    org::skynet::AsusManager svc{*connection, objectPath};
+    LOG_DBG("creating {} object ...\n", asus::OBJECT_PATH);
+    org::skynet::AsusManager svc{*connection, asus::OBJECT_PATH};
 
-    LOG_INF("daemon for " + destinationName + " started");
+    LOG_INF("starting {} daemon ...\n", asus::DESTINATION);
     // Run the loop on the connection.
     connection->enterEventLoop();
 }

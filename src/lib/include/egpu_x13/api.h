@@ -1,4 +1,4 @@
 #include "../utils.h"
-#include "../config.h"
-#include "../system.h"
-#include "../module_file.h"
+#include "../systemd-manager-proxy.h"
+#include "../kmod.h"
+#include "../pci.h"

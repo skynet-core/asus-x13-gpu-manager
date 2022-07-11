@@ -24,32 +24,48 @@ protected:
         : proxy_(proxy)
     {
         proxy_.uponSignal("txStart").onInterface(INTERFACE_NAME).call([this](const std::string& id, const std::string& info){ this->onTxStart(id, info); });
-        proxy_.uponSignal("txEnd").onInterface(INTERFACE_NAME).call([this](const std::string& id, const int32_t& code){ this->onTxEnd(id, code); });
+        proxy_.uponSignal("txEnd").onInterface(INTERFACE_NAME).call([this](const std::string& id, const int32_t& code, const std::string& status){ this->onTxEnd(id, code, status); });
     }
 
     ~Manager_proxy() = default;
 
     virtual void onTxStart(const std::string& id, const std::string& info) = 0;
-    virtual void onTxEnd(const std::string& id, const int32_t& code) = 0;
+    virtual void onTxEnd(const std::string& id, const int32_t& code, const std::string& status) = 0;
 
 public:
-    int32_t health()
+    std::tuple<int32_t, std::string> getCurrentMode()
     {
-        int32_t result;
-        proxy_.callMethod("health").onInterface(INTERFACE_NAME).storeResultsTo(result);
+        std::tuple<int32_t, std::string> result;
+        proxy_.callMethod("getCurrentMode").onInterface(INTERFACE_NAME).storeResultsTo(result);
         return result;
     }
 
-    int32_t getCurrentActiveGPU()
+    std::tuple<int32_t, std::string> setIntegrated()
     {
-        int32_t result;
-        proxy_.callMethod("getCurrentActiveGPU").onInterface(INTERFACE_NAME).storeResultsTo(result);
+        std::tuple<int32_t, std::string> result;
+        proxy_.callMethod("setIntegrated").onInterface(INTERFACE_NAME).storeResultsTo(result);
         return result;
     }
 
-    void toggleActiveGPU()
+    std::tuple<int32_t, std::string> setHybrid()
     {
-        proxy_.callMethod("toggleActiveGPU").onInterface(INTERFACE_NAME);
+        std::tuple<int32_t, std::string> result;
+        proxy_.callMethod("setHybrid").onInterface(INTERFACE_NAME).storeResultsTo(result);
+        return result;
+    }
+
+    std::tuple<int32_t, std::string> setXMobile()
+    {
+        std::tuple<int32_t, std::string> result;
+        proxy_.callMethod("setXMobile").onInterface(INTERFACE_NAME).storeResultsTo(result);
+        return result;
+    }
+
+    std::tuple<int32_t, std::string> setCompute()
+    {
+        std::tuple<int32_t, std::string> result;
+        proxy_.callMethod("setCompute").onInterface(INTERFACE_NAME).storeResultsTo(result);
+        return result;
     }
 
 private:

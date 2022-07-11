@@ -23,11 +23,13 @@ protected:
     Manager_adaptor(sdbus::IObject& object)
         : object_(object)
     {
-        object_.registerMethod("health").onInterface(INTERFACE_NAME).withOutputParamNames("code").implementedAs([this](){ return this->health(); });
-        object_.registerMethod("getCurrentActiveGPU").onInterface(INTERFACE_NAME).withOutputParamNames("index").implementedAs([this](){ return this->getCurrentActiveGPU(); });
-        object_.registerMethod("toggleActiveGPU").onInterface(INTERFACE_NAME).implementedAs([this](){ return this->toggleActiveGPU(); });
+        object_.registerMethod("getCurrentMode").onInterface(INTERFACE_NAME).withOutputParamNames("mode", "name").implementedAs([this](){ return this->getCurrentMode(); });
+        object_.registerMethod("setIntegrated").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setIntegrated(); });
+        object_.registerMethod("setHybrid").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setHybrid(); });
+        object_.registerMethod("setXMobile").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setXMobile(); });
+        object_.registerMethod("setCompute").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setCompute(); });
         object_.registerSignal("txStart").onInterface(INTERFACE_NAME).withParameters<std::string, std::string>("id", "info");
-        object_.registerSignal("txEnd").onInterface(INTERFACE_NAME).withParameters<std::string, int32_t>("id", "code");
+        object_.registerSignal("txEnd").onInterface(INTERFACE_NAME).withParameters<std::string, int32_t, std::string>("id", "code", "status");
     }
 
     ~Manager_adaptor() = default;
@@ -38,15 +40,17 @@ public:
         object_.emitSignal("txStart").onInterface(INTERFACE_NAME).withArguments(id, info);
     }
 
-    void emitTxEnd(const std::string& id, const int32_t& code)
+    void emitTxEnd(const std::string& id, const int32_t& code, const std::string& status)
     {
-        object_.emitSignal("txEnd").onInterface(INTERFACE_NAME).withArguments(id, code);
+        object_.emitSignal("txEnd").onInterface(INTERFACE_NAME).withArguments(id, code, status);
     }
 
 private:
-    virtual int32_t health() = 0;
-    virtual int32_t getCurrentActiveGPU() = 0;
-    virtual void toggleActiveGPU() = 0;
+    virtual std::tuple<int32_t, std::string> getCurrentMode() = 0;
+    virtual std::tuple<int32_t, std::string> setIntegrated() = 0;
+    virtual std::tuple<int32_t, std::string> setHybrid() = 0;
+    virtual std::tuple<int32_t, std::string> setXMobile() = 0;
+    virtual std::tuple<int32_t, std::string> setCompute() = 0;
 
 private:
     sdbus::IObject& object_;
