@@ -5,6 +5,28 @@ include(GNUInstallDirs)
 include(CTest)
 include(CPack)
 
+
+execute_process(
+  COMMAND conan install .. --build=missing -s build_type=Debug -pr:b=default
+  WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/cmake
+  RESULT_VARIABLE CONAN_SERVER_RESULT)
+
+if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
+  include("${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
+
+find_package(fmt CONFIG REQUIRED)
+find_package(sdbus-cpp CONFIG REQUIRED)
+find_package(kmod CONFIG REQUIRED)
+find_package(Threads)
+
+add_custom_target(
+  systemd_gen
+  COMMAND
+    sdbus-c++-xml2cpp
+    ${CMAKE_CURRENT_LIST_DIR}/../../share/interfaces/systemd.xml
+    --proxy=${CMAKE_CURRENT_LIST_DIR}/systemd-manager-proxy-glue.h
+  SOURCES ${CMAKE_CURRENT_LIST_DIR}/../../share/interfaces/systemd.xml)
+
 configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.h.in
                ${CMAKE_CURRENT_LIST_DIR}/config/config.h)
 
@@ -12,13 +34,14 @@ file(GLOB LIB_SRC *.cpp *.h)
 
 add_library(${PROJECT_NAME} ${LIB_SRC})
 add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_dependencies(${PROJECT_NAME} systemd_gen)
 
 target_include_directories(
   ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
                          $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt sdbus-cpp::sdbus-cpp
-                                             kmod::kmod)
+                                             kmod::kmod Threads::Threads)
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
@@ -61,3 +84,6 @@ install(
   PATTERN *.h)
 
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/utils)
+else()
+  message(FATAL_ERROR "first install librray dependencies")
+endif()

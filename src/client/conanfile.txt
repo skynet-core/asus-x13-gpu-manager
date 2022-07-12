@@ -1,0 +1,12 @@
+[requires]
+zstd/1.5.2
+libsystemd/249.7
+sdbus-cpp/1.1.0
+boost/1.79.0
+
+[generators]
+CMakeDeps
+CMakeToolchain
+
+[options]
+*:shared=False

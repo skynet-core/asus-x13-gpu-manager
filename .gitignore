@@ -1,5 +1,6 @@
 .devcontainer/
 .vscode/
 build/
-cmake/**
+**/cmake/**
 !.gitkeep
+!*.cmake.in

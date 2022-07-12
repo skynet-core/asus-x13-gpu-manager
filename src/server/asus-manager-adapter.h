@@ -1,9 +1,8 @@
 #ifndef asus_manager_adapter_h_
 #define asus_manager_adapter_h_ 1
 
-#include <egpu_x13/api.h>
-
 #include "asus-manager-adapter-glue.h"
+#include <egpu_x13/api.h>
 #include <signal.h>
 #include <sdbus-c++/AdaptorInterfaces.h>
 #include <sdbus-c++/sdbus-c++.h>
@@ -67,6 +66,10 @@ namespace org
       }
       std::tuple<int32_t, std::string> setIntegrated() override
       {
+        // turn off device, unload modules, reboot
+        emitTxStart("","");
+        asus::pci::turn_off_device(device_id);
+
         return std::make_tuple<int32_t, std::string>(-1, "");
       }
       std::tuple<int32_t, std::string> setHybrid() override
