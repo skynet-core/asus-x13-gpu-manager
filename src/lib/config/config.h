@@ -11,6 +11,10 @@
 #define LOG_LEVEL 1
 #endif
 
+#if defined(SYS_LOG_ENABLED)
+    #define JOURNAL_LOG 1
+#endif
+
 #include <string>
 
 namespace org

@@ -27,17 +27,16 @@ protected:
         object_.registerMethod("setIntegrated").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setIntegrated(); });
         object_.registerMethod("setHybrid").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setHybrid(); });
         object_.registerMethod("setXMobile").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setXMobile(); });
-        object_.registerMethod("setCompute").onInterface(INTERFACE_NAME).withOutputParamNames("result", "message").implementedAs([this](){ return this->setCompute(); });
-        object_.registerSignal("txStart").onInterface(INTERFACE_NAME).withParameters<std::string, std::string>("id", "info");
+        object_.registerSignal("txStart").onInterface(INTERFACE_NAME).withParameters<std::string, std::string, std::string>("id", "from", "to");
         object_.registerSignal("txEnd").onInterface(INTERFACE_NAME).withParameters<std::string, int32_t, std::string>("id", "code", "status");
     }
 
     ~Manager_adaptor() = default;
 
 public:
-    void emitTxStart(const std::string& id, const std::string& info)
+    void emitTxStart(const std::string& id, const std::string& from, const std::string& to)
     {
-        object_.emitSignal("txStart").onInterface(INTERFACE_NAME).withArguments(id, info);
+        object_.emitSignal("txStart").onInterface(INTERFACE_NAME).withArguments(id, from, to);
     }
 
     void emitTxEnd(const std::string& id, const int32_t& code, const std::string& status)
@@ -50,7 +49,6 @@ private:
     virtual std::tuple<int32_t, std::string> setIntegrated() = 0;
     virtual std::tuple<int32_t, std::string> setHybrid() = 0;
     virtual std::tuple<int32_t, std::string> setXMobile() = 0;
-    virtual std::tuple<int32_t, std::string> setCompute() = 0;
 
 private:
     sdbus::IObject& object_;

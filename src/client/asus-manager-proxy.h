@@ -26,14 +26,14 @@ namespace org
             }
 
         protected:
-            void onTxStart(const std::string &id, const std::string &info) override
+            void onTxStart(const std::string& id, const std::string& from, const std::string& to) override
             {
-                LOG_INF("transaction {} started: {}\n", id, info);
+                LOG_INF("[{}] {} ==> {}\n", id, from, to);
             }
 
             void onTxEnd(const std::string &id, const int32_t &code, const std::string &status) override
             {
-                LOG_INF("transaction {} ended: ({}) {}\n", id, code, status);
+                LOG_INF("[{}] ({}) {}\n", id, code, status);
             }
         };
     }

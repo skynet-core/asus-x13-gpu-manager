@@ -10,7 +10,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
 
   find_package(fmt CONFIG REQUIRED)
   find_package(sdbus-cpp CONFIG REQUIRED)
-  find_package(kmod CONFIG REQUIRED)
+  find_package(Boost CONFIG REQUIRED)
 
   add_custom_target(
     server_gen
@@ -26,7 +26,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
   target_link_libraries(
     ${PROJECT_NAME} PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp
-                            egpu_x13_lib::egpu_x13_lib)
+                            egpu_x13_lib::egpu_x13_lib Boost::boost Boost::headers)
 else()
     message(FATAL_ERROR "first install service dependencies")
 endif()

@@ -23,8 +23,8 @@ namespace org
       ~SystemdProxy();
 
       bool is_display_manager_active();
-      auto stop_display_manager();
-      auto restart_display_manager();
+      sdbus::ObjectPath stop_display_manager();
+      sdbus::ObjectPath restart_display_manager();
 
     protected:
       void onUnitNew(const std::string &id, const sdbus::ObjectPath &unit) override;

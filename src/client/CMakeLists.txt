@@ -12,6 +12,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
 
   find_package(fmt CONFIG REQUIRED)
   find_package(sdbus-cpp CONFIG REQUIRED)
+  find_package(CLI11 CONFIG REQUIRED)
 
   add_custom_target(
     client_gen
@@ -29,7 +30,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
                              PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   target_link_libraries(
     ${PROJECT_NAME} PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp
-                            egpu_x13_lib::egpu_x13_lib)
+                            egpu_x13_lib::egpu_x13_lib CLI11::CLI11)
 else()
-    message(FATAL_ERROR "first install client dependencies")
+  message(FATAL_ERROR "first install client dependencies")
 endif()

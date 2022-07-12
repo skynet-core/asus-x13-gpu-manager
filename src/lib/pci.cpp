@@ -236,62 +236,20 @@ namespace org
                     {
                         return err;
                     }
+                    LOG_DBG("ensure eGPU enabled\n");
+                    err = egpu_enable();
+                    if (err)
+                    {
+                        return err;
+                    }
+                    LOG_DBG("forcing pci rescan\n");
+                    err = force_pci_rescan();
+                    if (err)
+                    {
+                        return err;
+                    }
                     LOG_DBG("ensure dGPU disabled\n");
                     err = dgpu_disable();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("forcing pci rescan\n");
-                    err = force_pci_rescan();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("ensure eGPU enabled\n");
-                    err = egpu_enable();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("forcing pci rescan\n");
-                    err = force_pci_rescan();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    return 0;
-                }
-
-                int set_compute_mode(const std::string_view pci_id)
-                {
-                    // turn off gpu device first
-                    LOG_DBG("turning off {} device\n", pci_id);
-                    auto err = turn_off_device(pci_id);
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("forcing pci rescan\n");
-                    err = force_pci_rescan();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("ensure eGPU enabled\n");
-                    err = egpu_enable();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("forcing pci rescan\n");
-                    err = force_pci_rescan();
-                    if (err)
-                    {
-                        return err;
-                    }
-                    LOG_DBG("ensure dGPU enabled\n");
-                    err = dgpu_enable();
                     if (err)
                     {
                         return err;

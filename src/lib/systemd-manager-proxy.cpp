@@ -36,44 +36,44 @@ namespace org
             return false;
         }
 
-        auto SystemdProxy::stop_display_manager()
+        sdbus::ObjectPath SystemdProxy::stop_display_manager()
         {
             // returns ObjectPath ...
             return this->StopUnit(systemd1::unit::DISPLAY_MANAGER_SERVICE, systemd1::mode::REPLACE);
         }
 
-        auto SystemdProxy::restart_display_manager()
+        sdbus::ObjectPath SystemdProxy::restart_display_manager()
         {
             return this->RestartUnit(systemd1::unit::DISPLAY_MANAGER_SERVICE, systemd1::mode::REPLACE);
         }
 
         void SystemdProxy::onUnitNew(const std::string &id, const sdbus::ObjectPath &unit)
         {
-            LOG_DBG("SystemdProxy::onUnitNew");
+            // LOG_DBG("SystemdProxy::onUnitNew");
         }
         void SystemdProxy::onUnitRemoved(const std::string &id, const sdbus::ObjectPath &unit)
         {
-            LOG_DBG("SystemdProxy::onUnitRemoved");
+            // LOG_DBG("SystemdProxy::onUnitRemoved");
         }
         void SystemdProxy::onJobNew(const uint32_t &id, const sdbus::ObjectPath &job, const std::string &unit)
         {
-            LOG_DBG("SystemdProxy::onJobNew");
+            // LOG_DBG("SystemdProxy::onJobNew");
         }
         void SystemdProxy::onJobRemoved(const uint32_t &id, const sdbus::ObjectPath &job, const std::string &unit, const std::string &result)
         {
-            LOG_DBG("SystemdProxy::onJobRemoved");
+            // LOG_DBG("SystemdProxy::onJobRemoved");
         }
         void SystemdProxy::onStartupFinished(const uint64_t &firmware, const uint64_t &loader, const uint64_t &kernel, const uint64_t &initrd, const uint64_t &userspace, const uint64_t &total)
         {
-            LOG_DBG("SystemdProxy::onStartupFinished");
+            // LOG_DBG("SystemdProxy::onStartupFinished");
         }
         void SystemdProxy::onUnitFilesChanged()
         {
-            LOG_DBG("SystemdProxy::onUnitFilesChanged");
+            // LOG_DBG("SystemdProxy::onUnitFilesChanged");
         }
         void SystemdProxy::onReloading(const bool &active)
         {
-            LOG_DBG("SystemdProxy::onReloading");
+            // LOG_DBG("SystemdProxy::onReloading");
         }
     }
 }

@@ -1,0 +1,19 @@
+[Unit]
+Name=asus-gpu-man
+Description=Asus GPU Manager Service
+StartLimitInterval=200
+StartLimitBurst=2
+Before=multi-user.target
+
+[Service]
+Environment=IS_ASUS_GPU_SERVICE=1
+ExecStart=/opt/asus-gpu-man/service
+Restart=on-failure
+Restart=always
+RestartSec=3
+Type=dbus
+BusName=org.skynet.asus
+SELinuxContext=system_u:system_r:unconfined_t:s0
+
+[Install]
+WantedBy=multi-user.target

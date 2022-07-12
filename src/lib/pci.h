@@ -24,7 +24,6 @@ namespace org
                 int set_integrated_only(const std::string_view pci_id);
                 int set_hybrid_dgpu(const std::string_view pci_id);
                 int set_hybrid_egpu(const std::string_view pci_id);
-                int set_compute_mode(const std::string_view pci_id);
             }
         }
     }

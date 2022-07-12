@@ -26,7 +26,7 @@ namespace org
                         if (res)
                         {
                             failed++;
-                            LOG_ERR("kmod_module_new_from_name {}: ({}){}\n",
+                            LOG_ERROR("kmod_module_new_from_name {}: ({}){}\n",
                                     name, res, strerror(-res));
                             continue;
                         }
@@ -35,7 +35,7 @@ namespace org
                         if (res && (-res) != ENOENT)
                         {
                             failed++;
-                            LOG_ERR("failed to delete kernel module {}: ({}){}\n",
+                            LOG_ERROR("failed to delete kernel module {}: ({}){}\n",
                                     kmod_module_get_path(mod), res,
                                     strerror(-res));
                         }
@@ -57,7 +57,7 @@ namespace org
                         if (res)
                         {
                             failed++;
-                            LOG_ERR("kmod_module_new_from_path {}: {}\n",
+                            LOG_ERROR("kmod_module_new_from_path {}: {}\n",
                                     name, strerror(errno));
                             continue;
                         }
@@ -81,7 +81,7 @@ namespace org
                         if (res)
                         {
                             failed++;
-                            LOG_ERR("failed to load kernel module {}: {}\n",
+                            LOG_ERROR("failed to load kernel module {}: {}\n",
                                     kmod_module_get_name(mod), strerror(errno));
                         }
                         kmod_module_unref(mod);

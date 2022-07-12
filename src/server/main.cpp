@@ -6,6 +6,7 @@
 using namespace org::skynet;
 
 const std::string AsusManager::device_id{"0000:01:00.0"};
+const std::vector<std::string> AsusManager::modules{"nvidia-uvm", "nvidia-drm", "nvidia-modeset", "nvidia"};
 
 int main(int argc, char *argv[])
 {
