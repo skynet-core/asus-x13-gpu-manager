@@ -1,7 +1,10 @@
 project(x13_egpu_client)
 
+message(STATUS "CONAN_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+
 execute_process(
-  COMMAND conan install .. --build=missing -s build_type=Debug -pr:b=default
+  COMMAND conan install .. --build=missing -s build_type=${CMAKE_BUILD_TYPE}
+          -pr:b=default
   WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/cmake
   RESULT_VARIABLE CONAN_SERVER_RESULT)
 
@@ -31,6 +34,13 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   target_link_libraries(
     ${PROJECT_NAME} PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp
                             egpu_x13_lib::egpu_x13_lib CLI11::CLI11)
+
+  install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+    CONFIGURATIONS Release
+    PERMISSIONS WORLD_EXECUTE
+    DESTINATION bin
+    RENAME client)
 else()
   message(FATAL_ERROR "first install client dependencies")
 endif()

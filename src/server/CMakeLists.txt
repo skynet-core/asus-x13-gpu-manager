@@ -1,7 +1,8 @@
 project(x13_egpu_service)
 
 execute_process(
-  COMMAND conan install .. --build=missing -s build_type=Debug -pr:b=default
+  COMMAND conan install .. --build=missing -s build_type=${CMAKE_BUILD_TYPE}
+          -pr:b=default
   WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/cmake
   RESULT_VARIABLE CONAN_SERVER_RESULT)
 
@@ -25,8 +26,17 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   add_dependencies(${PROJECT_NAME} server_gen)
   target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_LIST_DIR})
   target_link_libraries(
-    ${PROJECT_NAME} PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp
-                            egpu_x13_lib::egpu_x13_lib Boost::boost Boost::headers)
+    ${PROJECT_NAME}
+    PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp egpu_x13_lib::egpu_x13_lib
+            Boost::boost Boost::headers)
+
+  install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
+    CONFIGURATIONS Release
+    PERMISSIONS OWNER_EXECUTE
+    DESTINATION bin
+    RENAME service)
+    
 else()
-    message(FATAL_ERROR "first install service dependencies")
+  message(FATAL_ERROR "first install service dependencies")
 endif()

@@ -4,9 +4,10 @@ include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
 include(CTest)
 include(CPack)
+message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 execute_process(
-  COMMAND conan install .. --build=missing -s build_type=Debug -pr:b=default
+  COMMAND conan install .. --build=missing -s build_type=${CMAKE_BUILD_TYPE} -pr:b=default
   WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/cmake
   RESULT_VARIABLE CONAN_SERVER_RESULT)
 
@@ -65,7 +66,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   configure_package_config_file(
     cmake/config.cmake.in
     ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
-    INSTALL_DESTINATION "lib/cmake/${PROJECT_NAME}"
+    INSTALL_DESTINATION "lib/cmake"
     NO_SET_AND_CHECK_MACRO)
 
   write_basic_package_version_file(
@@ -86,7 +87,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
     DESTINATION "lib/cmake/${PROJECT_NAME}")
 
   install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/egpu_x13
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     FILES_MATCHING
     PATTERN *.h)

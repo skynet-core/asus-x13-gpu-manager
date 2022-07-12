@@ -4,3 +4,4 @@ build/
 **/cmake/**
 !.gitkeep
 !*.cmake.in
+cmake_install.cmake
