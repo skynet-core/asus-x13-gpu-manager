@@ -1,6 +1,7 @@
 #include "pci.h"
 #include "config/config.h"
-#include "utils.h"
+#include "logutils.h"
+#include "defs.h"
 #include <fmt/core.h>
 #include <fmt/format.h>
 #include <fstream>

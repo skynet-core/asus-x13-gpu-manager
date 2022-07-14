@@ -18,15 +18,8 @@
             <arg type="i" name="result" direction="out" />
             <arg type="s" name="message" direction="out" />
         </method>
-        <signal name="txStart">
-            <arg type="s" name="id" />
-            <arg type="s" name="from" />
-            <arg type="s" name="to" />
-        </signal>
-        <signal name="txEnd">
-            <arg type="s" name="id" />
-            <arg type="i" name="code" />
-            <arg type="s" name="status" />
+        <signal name="restartPrompt">
+            <arg type="s" name="message" direction="out" />
         </signal>
     </interface>
 </node>

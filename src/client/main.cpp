@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cctype>
 #include <CLI/CLI.hpp>
-#include <egpu_x13/api.h>
+#include <asus-gpu-lib/api.h>
 #include "asus-manager-proxy.h"
 
 using namespace org::skynet;
@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
 
     int32_t code{-1};
     std::string text{"unknown"};
-    AsusManProxy asusCtrlProxy{asus::DESTINATION, asus::OBJECT_PATH};
+   
+    AsusManProxy asusCtrlProxy{asus::dbus::DESTINATION, asus::dbus::OBJECT_PATH};
     if (app.get_option("--mode")->as<bool>())
     {
         std::tie(code, text) = asusCtrlProxy.getCurrentMode();

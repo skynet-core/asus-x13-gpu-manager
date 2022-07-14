@@ -1,4 +1,4 @@
-project(egpu_x13_lib VERSION 0.1.0)
+project(asus-gpu-lib VERSION 0.1.0)
 
 include(CMakePackageConfigHelpers)
 include(GNUInstallDirs)
@@ -15,17 +15,10 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   include("${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
 
   find_package(fmt CONFIG REQUIRED)
-  find_package(sdbus-cpp CONFIG REQUIRED)
+  find_package(libsystemd CONFIG REQUIRED)
   find_package(kmod CONFIG REQUIRED)
   find_package(Threads)
 
-  add_custom_target(
-    systemd_gen
-    COMMAND
-      sdbus-c++-xml2cpp
-      ${CMAKE_CURRENT_LIST_DIR}/../../share/interfaces/systemd.xml
-      --proxy=${CMAKE_CURRENT_LIST_DIR}/systemd-manager-proxy-glue.h
-    SOURCES ${CMAKE_CURRENT_LIST_DIR}/../../share/interfaces/systemd.xml)
 
   configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.h.in
                  ${CMAKE_CURRENT_LIST_DIR}/config/config.h)
@@ -34,13 +27,12 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
 
   add_library(${PROJECT_NAME} ${LIB_SRC})
   add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
-  add_dependencies(${PROJECT_NAME} systemd_gen)
 
   target_include_directories(
     ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-  target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt sdbus-cpp::sdbus-cpp
+  target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt
                                                kmod::kmod
                                                libsystemd::libsystemd 
                                                Threads::Threads)
@@ -87,7 +79,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
     DESTINATION "lib/cmake/${PROJECT_NAME}")
 
   install(
-    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/egpu_x13
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/asus-gpu-lib
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
     FILES_MATCHING
     PATTERN *.h)

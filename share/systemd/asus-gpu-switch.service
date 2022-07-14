@@ -1,0 +1,14 @@
+[Unit]
+Description=Asus GPU Switch
+After=basic.target
+Before=display-manager.service
+
+[Service]
+Environment=IS_ASUS_GPU_SERVICE=1
+WorkingDirectory=/var/lib/asus-gpu-man
+ExecStart=/opt/asus-gpu-man/bin/asus-gpu-switch
+Type=oneshot
+RemainAfterExit=true
+
+[Install]
+WantedBy=basic.target

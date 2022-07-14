@@ -1,4 +1,4 @@
-project(x13_egpu_client)
+project(asus-gpu-cli)
 
 message(STATUS "CONAN_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
@@ -33,7 +33,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
                              PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
   target_link_libraries(
     ${PROJECT_NAME} PRIVATE fmt::fmt sdbus-cpp::sdbus-cpp
-                            egpu_x13_lib::egpu_x13_lib CLI11::CLI11)
+                            asus-gpu-lib::asus-gpu-lib CLI11::CLI11)
 
   install(
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}

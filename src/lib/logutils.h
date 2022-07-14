@@ -1,5 +1,5 @@
-#ifndef egpu_x13_lib_utils_h_
-#define egpu_x13_lib_utils_h_ 1
+#ifndef asus_gpu_lib_utils_h_
+#define asus_gpu_lib_utils_h_ 1
 
 #include "config/config.h"
 

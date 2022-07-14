@@ -1,10 +1,11 @@
 #include "kmod.h"
 #include "config/config.h"
 #include <linux/module.h>
-#include "utils.h"
+#include "logutils.h"
 #include <string.h>
 #include <libkmod.h>
 #include <errno.h>
+#include <fcntl.h>
 
 namespace org
 {

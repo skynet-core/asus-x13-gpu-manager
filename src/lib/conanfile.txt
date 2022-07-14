@@ -3,7 +3,6 @@ zstd/1.5.2
 catch2/3.0.1
 fmt/8.1.1
 libsystemd/249.7
-sdbus-cpp/1.1.0
 kmod/29
 
 [generators]

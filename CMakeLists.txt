@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.18)
 
 project(
-  x13_egpu
+  asus-gpu-manager
   VERSION 0.1.0
   LANGUAGES C CXX)
 
@@ -18,7 +18,7 @@ set(CMAKE_INSTALL_PREFIX
     CACHE STRING "install_prefix" FORCE)
 
 add_subdirectory(src/lib)
-add_subdirectory(src/server)
+add_subdirectory(src/service)
 add_subdirectory(src/client)
 
 install(

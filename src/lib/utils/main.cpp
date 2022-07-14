@@ -1,5 +1,5 @@
 #include <iostream>
-#include "include/egpu_x13/api.h"
+#include "include/asus-gpu-lib/api.h"
 
 using namespace org::skynet::asus::pci;
 using namespace org::skynet::asus::kernel;
