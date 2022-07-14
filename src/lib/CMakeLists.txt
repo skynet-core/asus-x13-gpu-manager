@@ -7,7 +7,8 @@ include(CPack)
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 execute_process(
-  COMMAND conan install .. --build=missing -s build_type=${CMAKE_BUILD_TYPE} -pr:b=default
+  COMMAND conan install .. --build=missing -s build_type=${CMAKE_BUILD_TYPE}
+          -pr:b=default
   WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/cmake
   RESULT_VARIABLE CONAN_SERVER_RESULT)
 
@@ -18,7 +19,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
   find_package(libsystemd CONFIG REQUIRED)
   find_package(kmod CONFIG REQUIRED)
   find_package(Threads)
-
+  find_package(spdlog CONFIG REQUIRED)
 
   configure_file(${CMAKE_CURRENT_LIST_DIR}/config/config.h.in
                  ${CMAKE_CURRENT_LIST_DIR}/config/config.h)
@@ -32,10 +33,9 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
     ${PROJECT_NAME} PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-  target_link_libraries(${PROJECT_NAME} PUBLIC fmt::fmt
-                                               kmod::kmod
-                                               libsystemd::libsystemd 
-                                               Threads::Threads)
+  target_link_libraries(
+    ${PROJECT_NAME} PUBLIC fmt::fmt kmod::kmod spdlog::spdlog libsystemd::libsystemd
+                           Threads::Threads)
 
   target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)
 
@@ -48,10 +48,6 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
     list(APPEND MY_DEFINITIONS LEVEL_WARN)
   elseif(DEFINED LEVEL_ERROR)
     list(APPEND MY_DEFINITIONS LEVEL_ERROR)
-  endif()
-
-  if(DEFINED SYS_LOG_ENABLED)
-    list(APPEND MY_DEFINITIONS SYS_LOG_ENABLED)
   endif()
   target_compile_definitions(${PROJECT_NAME} PUBLIC "${MY_DEFINITIONS}")
 

@@ -5,3 +5,4 @@
 #include "../strutils.h"
 #include "../defs.h"
 #include "../fsutils.h"
+#include "../toggle.h"

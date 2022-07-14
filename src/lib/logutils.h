@@ -7,8 +7,10 @@
 #include <fmt/color.h>
 #include <fmt/format.h>
 #include <fmt/compile.h>
-#include <systemd/sd-journal.h>
+#include <fmt/ranges.h>
+#include <fmt/printf.h>
 #include <ranges>
+#include <spdlog/spdlog.h>
 
 namespace org
 {
@@ -18,55 +20,42 @@ namespace org
         {
             namespace log
             {
+
+                void enable();
+                
                 template <typename S, typename... Args>
                 void print(const S &format, Args &&...args)
                 {
                     auto msg = fmt::vformat(format, fmt::make_args_checked<Args...>(format, args...));
-                    fmt::print("{}\n", msg);
+                    fmt::print("{}\n\r", msg);
                 }
 
                 template <typename S, typename... Args>
                 void debug(const S &format, Args &&...args)
                 {
-                    fmt::print("[{}]: ", fmt::format(fmt::fg(fmt::color::green) | fmt::emphasis::bold, "{:^7}", "DEBUG"));
                     auto msg = fmt::vformat(format, fmt::make_args_checked<Args...>(format, args...));
-                    fmt::print("{}", msg);
-#ifdef JOURNAL_LOG
-                    sd_journal_print(LOG_DEBUG, "%s", msg.c_str());
-#endif
+                    spdlog::debug(msg);
                 }
 
                 template <typename S, typename... Args>
                 void info(const S &format, Args &&...args)
                 {
-                    fmt::print("[{}]: ", fmt::format(fmt::fg(fmt::color::yellow) | fmt::emphasis::bold, "{:^7}", "INFO"));
                     auto msg = fmt::vformat(format, fmt::make_args_checked<Args...>(format, args...));
-                    fmt::print("{}", msg);
-#ifdef JOURNAL_LOG
-                    sd_journal_print(LOG_INFO, "%s", msg.c_str());
-#endif
+                    spdlog::info(msg);
                 }
 
                 template <typename S, typename... Args>
                 void warn(const S &format, Args &&...args)
                 {
-                    fmt::print("[{}]: ", fmt::format(fmt::fg(fmt::color::orange) | fmt::emphasis::bold, "{:^7}", "WARN"));
                     auto msg = fmt::vformat(format, fmt::make_args_checked<Args...>(format, args...));
-                    fmt::print("{}", msg);
-#ifdef JOURNAL_LOG
-                    sd_journal_print(LOG_WARNING, "%s", msg.c_str());
-#endif
+                    spdlog::warn(msg);
                 }
 
                 template <typename S, typename... Args>
                 void error(const S &format, Args &&...args)
                 {
-                    fmt::print("[{}]: ", fmt::format(fmt::fg(fmt::color::red) | fmt::emphasis::bold, "{:^7}", "ERROR"));
                     auto msg = fmt::vformat(format, fmt::make_args_checked<Args...>(format, args...));
-                    fmt::print("{}", msg);
-#ifdef JOURNAL_LOG
-                    sd_journal_print(LOG_ERR, "%s", msg.c_str());
-#endif
+                    spdlog::error(msg);
                 }
             }
         }

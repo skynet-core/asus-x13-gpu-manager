@@ -4,6 +4,7 @@ catch2/3.0.1
 fmt/8.1.1
 libsystemd/249.7
 kmod/29
+spdlog/1.10.0
 
 [generators]
 CMakeDeps

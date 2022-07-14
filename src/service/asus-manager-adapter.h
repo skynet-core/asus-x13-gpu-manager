@@ -11,7 +11,6 @@
 #include <string_view>
 #include <filesystem>
 
-
 namespace org
 {
   namespace skynet
@@ -29,7 +28,8 @@ namespace org
 
       public:
         Manager(sdbus::IConnection &connection, std::string objectPath,
-                fs::path &&wd, const std::string_view file);
+                fs::path &&wd, const std::string_view file,
+                const std::string_view next);
 
         ~Manager();
 
@@ -49,6 +49,7 @@ namespace org
         SystemdProxy systemd_proxy_;
         fs::path wd_;
         std::string state_file_name_;
+        std::string next_state_file_name_;        
       };
 
     } // namespace asus

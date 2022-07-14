@@ -28,7 +28,7 @@ std::unordered_map<std::string_view, GPUMode> &mode_by_name()
 
 int main(int argc, char *argv[])
 {
-
+    org::skynet::asus::log::enable();
     CLI::App app{"Asus GPU Manager CLI"};
     app.add_flag("-m,--mode", "read current GPU mode");
     std::string target_mode;
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     int32_t code{-1};
     std::string text{"unknown"};
    
-    AsusManProxy asusCtrlProxy{asus::dbus::DESTINATION, asus::dbus::OBJECT_PATH};
+    AsusManProxy asusCtrlProxy{asus::manager::dbus::DESTINATION, asus::manager::dbus::OBJECT_PATH};
     if (app.get_option("--mode")->as<bool>())
     {
         std::tie(code, text) = asusCtrlProxy.getCurrentMode();

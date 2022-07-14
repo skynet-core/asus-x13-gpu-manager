@@ -2,13 +2,12 @@
 Description=Asus GPU Manager Service
 StartLimitInterval=200
 StartLimitBurst=2
-After=basic.target
-Before=display-manager.service
+After=multi-user.target
 
 [Service]
 Environment=IS_ASUS_GPU_SERVICE=1
-WorkingDirectory=/var/lib/asus-gpu-man
-ExecStart=/opt/asus-gpu-man/bin/asus-gpu-service
+WorkingDirectory=/var/lib/asus-gpu-manager
+ExecStart=/opt/asus-gpu-manager/bin/asus-gpu-manager
 Restart=on-failure
 Restart=always
 RestartSec=3
@@ -17,4 +16,4 @@ BusName=org.skynet.asus
 SELinuxContext=system_u:system_r:unconfined_t:s0
 
 [Install]
-WantedBy=basic.target
+WantedBy=multi-user.target

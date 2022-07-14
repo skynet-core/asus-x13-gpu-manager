@@ -1,11 +1,12 @@
 #include <iostream>
 #include "include/asus-gpu-lib/api.h"
 
-using namespace org::skynet::asus::pci;
+using namespace org::skynet::asus;
 using namespace org::skynet::asus::kernel;
 
 int main(int argc, char *argv[])
 {
+    org::skynet::asus::log::enable();
     if (argc < 2)
     {
         std::cerr << "argument required" << std::endl;
@@ -25,17 +26,17 @@ int main(int argc, char *argv[])
 
     if (action == "integrated")
     {
-        return set_integrated_only("0000:01:00.0");
+        return toggle::integrated({"nvidia-uvm", "nvidia-drm", "nvidia-modeset", "nvidia"});
     }
 
     if (action == "hybrid")
     {
-        return set_hybrid_dgpu("0000:01:00.0");
+        return toggle::hybrid({"nvidia-uvm", "nvidia-drm", "nvidia-modeset", "nvidia"});
     }
 
-    if (action == "xmobile")
+    if (action == "egpu")
     {
-        return set_hybrid_egpu("0000:01:00.0");
+        return toggle::egpu({"nvidia-uvm", "nvidia-drm", "nvidia-modeset", "nvidia"});
     }
     std::cerr << "action " << action << " is not supported" << std::endl;
     return -1;

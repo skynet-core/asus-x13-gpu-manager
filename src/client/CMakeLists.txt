@@ -39,8 +39,7 @@ if(EXISTS "${CMAKE_CURRENT_LIST_DIR}/cmake/conan_toolchain.cmake")
     FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}
     CONFIGURATIONS Release
     PERMISSIONS WORLD_EXECUTE
-    DESTINATION bin
-    RENAME client)
+    DESTINATION bin)
 else()
   message(FATAL_ERROR "first install client dependencies")
 endif()
