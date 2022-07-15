@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
         err = asus::toggle::hybrid(modules);
         break;
     case asus::mode::GPUMode::EGPU:
+        err = asus::toggle::egpu(modules);
         break;
     case asus::mode::GPUMode::UNKNOWN:
         [[fallthrough]];
