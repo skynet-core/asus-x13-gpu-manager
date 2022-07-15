@@ -26,14 +26,8 @@ namespace org
             }
 
         protected:
-            void onTxStart(const std::string& id, const std::string& from, const std::string& to) override
+            void onRestartPrompt(const std::string &message) override
             {
-                LOG_INF("[{}] {} ==> {}\n", id, from, to);
-            }
-
-            void onTxEnd(const std::string &id, const int32_t &code, const std::string &status) override
-            {
-                LOG_INF("[{}] ({}) {}\n", id, code, status);
             }
         };
     }

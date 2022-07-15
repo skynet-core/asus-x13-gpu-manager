@@ -1,13 +1,13 @@
 [Unit]
-Name=asus-gpu-man
 Description=Asus GPU Manager Service
 StartLimitInterval=200
 StartLimitBurst=2
-Before=multi-user.target
+After=multi-user.target
 
 [Service]
 Environment=IS_ASUS_GPU_SERVICE=1
-ExecStart=/opt/asus-gpu-man/service
+WorkingDirectory=/var/lib/asus-gpu-manager
+ExecStart=/opt/asus-gpu-manager/bin/asus-gpu-manager
 Restart=on-failure
 Restart=always
 RestartSec=3

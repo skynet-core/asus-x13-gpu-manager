@@ -1,0 +1,16 @@
+[Unit]
+Description=Asus GPU Switch
+After=basic.target
+Before=multi-user.service
+
+[Service]
+Environment=IS_ASUS_GPU_SERVICE=1
+WorkingDirectory=/var/lib/asus-gpu-manager
+ExecStart=/opt/asus-gpu-manager/bin/asus-gpu-switch
+Type=oneshot
+TimeoutStopSec=30
+JobRunningTimeoutSec=30
+RemainAfterExit=true
+
+[Install]
+WantedBy=basic.target

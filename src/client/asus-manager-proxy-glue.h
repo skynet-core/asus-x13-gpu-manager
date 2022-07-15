@@ -23,14 +23,12 @@ protected:
     Manager_proxy(sdbus::IProxy& proxy)
         : proxy_(proxy)
     {
-        proxy_.uponSignal("txStart").onInterface(INTERFACE_NAME).call([this](const std::string& id, const std::string& from, const std::string& to){ this->onTxStart(id, from, to); });
-        proxy_.uponSignal("txEnd").onInterface(INTERFACE_NAME).call([this](const std::string& id, const int32_t& code, const std::string& status){ this->onTxEnd(id, code, status); });
+        proxy_.uponSignal("restartPrompt").onInterface(INTERFACE_NAME).call([this](const std::string& message){ this->onRestartPrompt(message); });
     }
 
     ~Manager_proxy() = default;
 
-    virtual void onTxStart(const std::string& id, const std::string& from, const std::string& to) = 0;
-    virtual void onTxEnd(const std::string& id, const int32_t& code, const std::string& status) = 0;
+    virtual void onRestartPrompt(const std::string& message) = 0;
 
 public:
     std::tuple<int32_t, std::string> getCurrentMode()

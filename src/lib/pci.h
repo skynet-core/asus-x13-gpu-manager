@@ -1,5 +1,5 @@
-#ifndef egpu_x13_lib_pci_h_
-#define egpu_x13_lib_pci_h_ 1
+#ifndef asus_gpu_lib_pci_h_
+#define asus_gpu_lib_pci_h_ 1
 
 #include <string_view>
 
@@ -20,10 +20,6 @@ namespace org
                 int egpu_disable();
                 char is_dgpu_disabled();
                 char is_egpu_enabled();
-
-                int set_integrated_only(const std::string_view pci_id);
-                int set_hybrid_dgpu(const std::string_view pci_id);
-                int set_hybrid_egpu(const std::string_view pci_id);
             }
         }
     }
